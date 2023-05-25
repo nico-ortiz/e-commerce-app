@@ -1,5 +1,6 @@
 package com.project.ecommerce;
 
+import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,13 @@ public class EcommerceApplication {
 		SpringApplication.run(EcommerceApplication.class, args);
 	}
 
-	@GetMapping("/hello")
-	public String hello(@RequestParam("name") String name) {
-		return String.format("Helloooooo %s!", name);
+	@GetMapping("/api/person")
+	public List<Person> getPerson() {
+		return List.of(
+			new Person(1L,
+					"Devin Booker",
+					"123456789",
+					"dbook")
+		);
 	}
 }
