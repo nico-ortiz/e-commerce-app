@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.ecommerce.person.Person;
 
@@ -23,6 +26,17 @@ public class Customer extends Person{
     @Column(name = "customer_birthday", length = 30, nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private LocalDate birthday;
+
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDate createdAt;
+
+    @Column(name = "updated_on")
+	@UpdateTimestamp
+	private LocalDate updatedOn;
+
+	@Column(name = "updated_by")
+	private String updatedBy; //Cambiar a Admin
 
     public Customer() {};
 
