@@ -3,26 +3,19 @@ package com.project.ecommerce.customer;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomerService {
     
-    
-    private CustomerRepository customerRepository;
-
     @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
-        this.customerRepository =  customerRepository;
-    }
-
-    public Customer getCustomer(Long id) {
-        return customerRepository.findCustomer(id);
-    }
+    private CustomerRepository repository;
 
     public List<Customer> getCustomers() {
-        return customerRepository.findAll();
+        return repository.findAll();
     }
 
-    public Customer saveCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer createCustomer(Customer customer) {
+        return repository.save(customer);
     }
 }

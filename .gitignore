@@ -2,3 +2,4 @@
 *.lst
 *.log
 .vscode/
+tests/

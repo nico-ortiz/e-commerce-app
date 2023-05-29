@@ -1,12 +1,12 @@
 package com.project.ecommerce.person;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-@Entity(name="person")
+@MappedSuperclass
 public class Person {
     
     @Id

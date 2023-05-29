@@ -2,14 +2,27 @@ package com.project.ecommerce.customer;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.ecommerce.person.Person;
 
+@Entity(name="customer")
 public class Customer extends Person{
     
+    @Column(name = "customer_address", length = 30, nullable = false)
     private String address;
+
+    @Column(name = "customer_email", length = 30, nullable = false)
     private String email;
-    private String phone_number;
-    private LocalDate day_of_birth;
+
+    @Column(name = "customer_phone_number", length = 30, nullable = false)
+    private String phoneNumber;
+
+    @Column(name = "customer_birthday", length = 30, nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    private LocalDate birthday;
 
     public Customer() {};
 
@@ -17,8 +30,8 @@ public class Customer extends Person{
         super(name, dni, username);
         this.address = address;
         this.email = email;
-        this.phone_number = phone_number;
-        this.day_of_birth = date;
+        this.phoneNumber = phone_number;
+        this.birthday = date;
     };
 
     public String getAddress() {
@@ -30,11 +43,11 @@ public class Customer extends Person{
     }
 
     public String getPhoneNumber() {
-        return  this.phone_number;
+        return  this.phoneNumber;
     }
 
     public LocalDate getBirthday() {
-        return this.day_of_birth;
+        return this.birthday;
     }
 
     public void setAddress(String address) {
@@ -46,11 +59,11 @@ public class Customer extends Person{
     }
 
     public void setPhoneNumber(String phone_number) {
-        this.phone_number = phone_number;
+        this.phoneNumber = phone_number;
     }
 
-    public void setBirthday(LocalDate day_of_birth) {
-        this.day_of_birth = day_of_birth;   
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;   
     }
 
     public String toString() {
@@ -61,8 +74,8 @@ public class Customer extends Person{
         "username=" + getUsername() + '\'' + 
         "address=" + this.address + '\'' +
         "email=" + this.email + '\'' +
-        "phone_number=" + this.phone_number + '\'' +
-        "birthday=" + this.day_of_birth + '\'' +
+        "phone_number=" + this.phoneNumber + '\'' +
+        "birthday=" + this.birthday + '\'' +
         "}";
     }
 }
