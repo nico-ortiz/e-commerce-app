@@ -4,8 +4,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,20 +23,16 @@ public class CustomerController {
     private CustomerService customerService; 
     
     @GetMapping()
-    public List<Customer> getCustomer() {
-        return customerService.getCustomers();
+    public ResponseEntity<List<Customer>> getCustomers() {
+        return ResponseEntity.ok(customerService.getCustomers());
     }
 
     @PostMapping(
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public Customer createCustomer(@RequestBody Customer customer) throws Exception {
-        try {
-            Customer customer_save = customerService.createCustomer(customer);
-            return customer_save;
-        } catch(Exception e) {
-            throw new Exception(e);
-        }
+    public ResponseEntity<Customer> createCustomer(@RequestBody @Valid CustomerRequest customerRequest) {
+        Customer customer_save = customerService.createCustomer(customerRequest);
+        return new ResponseEntity<Customer>(customer_save, HttpStatus.CREATED);
     }
       
 }

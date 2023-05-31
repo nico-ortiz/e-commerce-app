@@ -9,13 +9,14 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     
     @Autowired
-    private CustomerRepository repository;
+    private CustomerRepository customerRepository;
 
     public List<Customer> getCustomers() {
-        return repository.findAll();
+        return customerRepository.findAll();
     }
 
-    public Customer createCustomer(Customer customer) {
-        return repository.save(customer);
+    public Customer createCustomer(CustomerRequest customerRequest) {
+        Customer customer = new Customer(customerRequest.getName(), customerRequest.getDni(), customerRequest.getEmail(), customerRequest.getAddress(), customerRequest.getEmail(), customerRequest.getPhoneNumber(), customerRequest.getBirthday());
+        return customerRepository.save(customer);
     }
 }
