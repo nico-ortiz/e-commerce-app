@@ -25,4 +25,11 @@ public class CustomerService {
         Customer customer = new Customer(customerRequest.getName(), customerRequest.getDni(), customerRequest.getEmail(), customerRequest.getAddress(), customerRequest.getEmail(), customerRequest.getPhoneNumber(), customerRequest.getBirthday());
         return customerRepository.save(customer);
     }
+
+    public Customer deleteCustomer(Long id) {
+        Customer customer = customerRepository.findById(id).
+            orElseThrow(() -> new CustomerNotFoundException("Customer with id = " + id + " not found"));
+        customerRepository.deleteById(id);
+        return customer;
+    }
 }
