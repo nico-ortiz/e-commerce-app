@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.ecommerce.exception.CustomerNotFoundException;
+
 @Service
 public class CustomerService {
     
@@ -13,6 +15,10 @@ public class CustomerService {
 
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
+    }
+
+    public Customer getCustomerById(Long id) {
+        return customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer with id = " + id + " not found"));    
     }
 
     public Customer createCustomer(CustomerRequest customerRequest) {
