@@ -11,21 +11,23 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.project.ecommerce.category.Category;
+
 @Entity
 public class Product {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long productId;
 
     @Column(name = "product_name", length = 30, nullable = false)
-    private String name;
+    private String productName;
 
     @Column(name = "product_price", nullable = true)
-    private Float price;
+    private Float productPrice;
 
-    @Column(name = "product_brand", length = 30, nullable = false)
-    private String productBrand;
+    @Column(name = "product_brand_id", nullable = false, unique = true)
+    private Long productBrandId;
 
     @Column(name = "stock_count", nullable = false)
     private int stockCount;
@@ -34,7 +36,7 @@ public class Product {
     private boolean stock;
 
     @Column(name = "category_id", nullable = false, unique = true)
-    private Long categoryId;
+    private Category categoryId;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -44,30 +46,30 @@ public class Product {
 	@UpdateTimestamp
 	private LocalDate updatedOn;
 
-	@Column(name = "updated_by", nullable = false, unique = true)
+	@Column(name = "updated_by", unique = true)
 	private Long adminId;
     
     public Product() {};
 
-    public Product(String name, Float price, String product_brand, int stock_count, boolean stock, Long category) { 
-        this.name = name;
-        this.price = price;
-        this.productBrand = product_brand;
+    public Product(String name, Float price, Long product_brand_id, int stock_count, boolean stock, Category category) { 
+        this.productName = name;
+        this.productPrice = price;
+        this.productBrandId = product_brand_id;
         this.stockCount = stock_count;
         this.stock = stock;
         this.categoryId = category;
     }
 
     public String getName() {
-        return this.name;
+        return this.productName;
     }
 
     public Float getPrice() {
-        return this.price;
+        return this.productPrice;
     }
 
-    public String getProductBrand() {
-        return this.productBrand;
+    public Long getProductBrand() {
+        return this.productBrandId;
     }
 
     public int getStockCount() {
@@ -78,20 +80,20 @@ public class Product {
         return this.stock;
     }
 
-    public Long getCategory() {
+    public Category getCategory() {
         return  this.categoryId;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.productName = name;
     }
 
     public void setPrice(Float price) {
-        this.price = price;
+        this.productPrice = price;
     }
 
-    public void setProductBrand(String product_brand) {
-        this.productBrand = product_brand;
+    public void setProductBrand(Long product_brand_id) {
+        this.productBrandId = product_brand_id;
     }
 
     public void setCountStock(int stock_count) {
@@ -102,16 +104,16 @@ public class Product {
         this.stock = stock;
     }
 
-    public void setCategory(Long category_id) {
+    public void setCategory(Category category_id) {
         this.categoryId = category_id;
     }
 
     public String toString() {
         return "Product{" +
-        "id=" + this.id + '\'' +
-        "name=" + this.name + '\'' +
-        "price=" + this.price + '\'' +
-        "product_brand=" +  this.productBrand + '\'' + 
+        "id=" + this.productId + '\'' +
+        "name=" + this.productName + '\'' +
+        "price=" + this.productPrice + '\'' +
+        "product_brand=" +  this.productBrandId + '\'' + 
         "stock_count=" + this.stockCount + '\'' +
         "stock=" + this.stock + '\'' +
         "category=" + this.categoryId + '\'' +

@@ -15,17 +15,17 @@ import com.project.ecommerce.person.Person;
 public class Customer extends Person{
     
     @Column(name = "customer_address", length = 30, nullable = false)
-    private String address;
+    private String customerAddress;
 
     @Column(name = "customer_email", length = 30, nullable = false)
-    private String email;
+    private String customerEmail;
 
     @Column(name = "customer_phone_number", length = 30, nullable = false)
-    private String phoneNumber;
+    private String customerPhoneNumber;
 
     @Column(name = "customer_birthday", length = 30, nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    private LocalDate birthday;
+    private LocalDate customerBirthday;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -35,49 +35,49 @@ public class Customer extends Person{
 	@UpdateTimestamp
 	private LocalDate updatedOn;
 
-	@Column(name = "updated_by")
-	private String updatedBy; //Cambiar a Admin
+	@Column(name = "updated_by", unique = true)
+	private Long adminId; 
 
     public Customer() {};
 
     public Customer(String name, String dni, String username, String address, String email, String phone_number, LocalDate date) {
         super(name, dni, username);
-        this.address = address;
-        this.email = email;
-        this.phoneNumber = phone_number;
-        this.birthday = date;
+        this.customerAddress = address;
+        this.customerEmail = email;
+        this.customerPhoneNumber = phone_number;
+        this.customerBirthday = date;
     };
 
     public String getAddress() {
-        return this.address;
+        return this.customerAddress;
     }
 
     public String getEmail() {
-        return this.email;
+        return this.customerEmail;
     }
 
     public String getPhoneNumber() {
-        return  this.phoneNumber;
+        return  this.customerPhoneNumber;
     }
 
     public LocalDate getBirthday() {
-        return this.birthday;
+        return this.customerBirthday;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.customerAddress = address;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.customerEmail = email;
     }
 
     public void setPhoneNumber(String phone_number) {
-        this.phoneNumber = phone_number;
+        this.customerPhoneNumber = phone_number;
     }
 
     public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;   
+        this.customerBirthday = birthday;   
     }
 
     public String toString() {
@@ -86,10 +86,10 @@ public class Customer extends Person{
         "name=" + getName() + '\'' +
         "dni=" + getDni() + '\'' +
         "username=" + getUsername() + '\'' + 
-        "address=" + this.address + '\'' +
-        "email=" + this.email + '\'' +
-        "phone_number=" + this.phoneNumber + '\'' +
-        "birthday=" + this.birthday + '\'' +
+        "address=" + this.customerAddress + '\'' +
+        "email=" + this.customerEmail + '\'' +
+        "phone_number=" + this.customerPhoneNumber + '\'' +
+        "birthday=" + this.customerBirthday + '\'' +
         "}";
     }
 }
