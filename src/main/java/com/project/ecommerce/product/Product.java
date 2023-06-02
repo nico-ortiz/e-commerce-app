@@ -44,8 +44,8 @@ public class Product {
 	@UpdateTimestamp
 	private LocalDate updatedOn;
 
-	@Column(name = "updated_by")
-	private String updatedBy; //Cambiar a Admin
+	@Column(name = "updated_by", nullable = false, unique = true)
+	private Long adminId;
     
     public Product() {};
 
