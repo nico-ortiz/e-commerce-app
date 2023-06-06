@@ -13,13 +13,13 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "person_name", length = 50, nullable = false, unique = false)
+    @Column(name = "name", length = 50, nullable = false, unique = false)
     private String name;
 
-    @Column(name = "person_dni", length = 30, nullable = false, unique = true)
+    @Column(name = "dni", length = 30, nullable = false, unique = true)
     private String dni;
 
-    @Column(name = "person_username", length = 30, nullable = false, unique = false)
+    @Column(name = "username", length = 30, nullable = false, unique = false)
     private String username;    
 
     public Person() {}
