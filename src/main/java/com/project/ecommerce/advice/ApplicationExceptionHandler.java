@@ -14,7 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.project.ecommerce.exception.CustomerNotFoundException;
+import com.project.ecommerce.exception.IdNotFoundException;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
@@ -26,8 +26,8 @@ public class ApplicationExceptionHandler {
         return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(CustomerNotFoundException.class)
-    public ResponseEntity<Map<String, List<String>>> handleNotFoundException(CustomerNotFoundException exception) {
+    @ExceptionHandler(IdNotFoundException.class)
+    public ResponseEntity<Map<String, List<String>>> handleNotFoundException(IdNotFoundException exception) {
         List<String> errors = Collections.singletonList(exception.getMessage());
         return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
