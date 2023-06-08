@@ -4,27 +4,33 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.ecommerce.admin.Admin;
 import com.project.ecommerce.person.Person;
 
-@Entity(name="customer")
-public class Customer extends Person{
+@Entity()
+@Table(name = "customers")
+public class Customer extends Person {
     
-    @Column(name = "customer_address", length = 30, nullable = false)
+    @Column(name = "address", length = 30, nullable = false)
+    @NotBlank(message = "Invalid address: Empty address")
+    @NotNull(message = "Invalid address: Address is NULL")
     private String customerAddress;
 
-    @Column(name = "customer_email", length = 30, nullable = false)
-    private String customerEmail;
-
-    @Column(name = "customer_phone_number", length = 30, nullable = false)
+    @Column(name = "phone_number", length = 30, nullable = false)
+    @Pattern(regexp = "^\\d{10}$", message = "Invalid phone number")
     private String customerPhoneNumber;
 
-    @Column(name = "customer_birthday", length = 30, nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @Column(name = "birthday", length = 30, nullable = false)
     private LocalDate customerBirthday;
 
     @Column(name = "created_at")
@@ -35,25 +41,21 @@ public class Customer extends Person{
 	@UpdateTimestamp
 	private LocalDate updatedOn;
 
-	@Column(name = "updated_by", unique = true)
-	private Long adminId; 
+    @ManyToOne
+	@JoinColumn(name = "updated_by_admin_id")
+	private Admin adminId; 
 
     public Customer() {};
 
-    public Customer(String name, String dni, String username, String address, String email, String phone_number, LocalDate date) {
-        super(name, dni, username);
+    public Customer(String name, String dni, String username, String email, String address,  String phone_number, LocalDate date) {
+        super(name, dni, username, email);
         this.customerAddress = address;
-        this.customerEmail = email;
         this.customerPhoneNumber = phone_number;
         this.customerBirthday = date;
     };
 
     public String getAddress() {
         return this.customerAddress;
-    }
-
-    public String getEmail() {
-        return this.customerEmail;
     }
 
     public String getPhoneNumber() {
@@ -68,10 +70,6 @@ public class Customer extends Person{
         this.customerAddress = address;
     }
 
-    public void setEmail(String email) {
-        this.customerEmail = email;
-    }
-
     public void setPhoneNumber(String phone_number) {
         this.customerPhoneNumber = phone_number;
     }
@@ -82,14 +80,14 @@ public class Customer extends Person{
 
     public String toString() {
         return "Customer{" +
-        "id=" + getId() + '\'' +
-        "name=" + getName() + '\'' +
-        "dni=" + getDni() + '\'' +
-        "username=" + getUsername() + '\'' + 
-        "address=" + this.customerAddress + '\'' +
-        "email=" + this.customerEmail + '\'' +
-        "phone_number=" + this.customerPhoneNumber + '\'' +
-        "birthday=" + this.customerBirthday + '\'' +
-        "}";
+            "id=" + getId() + '\'' +
+            "name=" + getName() + '\'' +
+            "dni=" + getDni() + '\'' +
+            "username=" + getUsername() + '\'' + 
+            "email=" + getEmail() + '\'' +
+            "address=" + this.customerAddress + '\'' +
+            "phone_number=" + this.customerPhoneNumber + '\'' +
+            "birthday=" + this.customerBirthday + '\'' +
+            "}";
     }
 }
